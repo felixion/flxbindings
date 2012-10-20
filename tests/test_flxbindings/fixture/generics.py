@@ -1,4 +1,4 @@
-from flxinjection.domain import EntityFactory
+from flxinjection.domain import EntityFactory, Action
 
 class GenericFactory1(EntityFactory):
     """"""
@@ -56,3 +56,18 @@ class BuildExceptionFactory(EntityFactory):
         """"""
         raise BuildException("BuildExceptionFactory")
 
+class InitException(Exception):
+    """"""
+
+class InitExceptionAction(Action):
+    def run(self):
+        """"""
+        raise InitException("InitExceptionAction")
+
+class RunException(Exception):
+    """"""
+
+class RunExceptionAction(Action):
+    def run(self):
+        """"""
+        raise RunException("RunExceptionAction")

@@ -65,21 +65,23 @@ class TestEntityErrors(object):
         self.manager.add_entity(component)
         self.manager.resolve("component5")
 
+    @raises(BindingsInstantiationException)
     def test_exception_action_init(self):
         """
         Test running an action who throws an exception in __init__
         """
-#        component = Component("component6", "test_flxbindings.fixture.generics.GenericFactoryFoo")
-#        self.manager.add_entity(component)
-#        self.manager.resolve("component6")
+        component = Component("component6", "test_flxbindings.fixture.generics.RunExceptionAction")
+        self.manager.add_entity(component)
+        self.manager.resolve("component6")
 
+    @raises(BindingsInstantiationException)
     def test_exception_action_run(self):
         """
         Test running an action who throws an exception in run
         """
-#        component = Component("component7", "test_flxbindings.fixture.generics.BuildExceptionFactory")
-#        self.manager.add_entity(component)
-#        self.manager.resolve("component7")
+        component = Component("component7", "test_flxbindings.fixture.generics.InitExceptionAction")
+        self.manager.add_entity(component)
+        self.manager.resolve("component7")
 
     def test_exception_singleton(self):
         """
