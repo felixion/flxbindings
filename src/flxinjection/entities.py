@@ -3,20 +3,42 @@ class EntityConfigurationManager(object):
     """
     def __init__(self):
         """"""
-        self._entity_configs = dict()
+        self._label_map = dict()
+        self._factory_map = dict()
+#        self._entity_configs = dict()
 
     def resolve(self, label):
         """
         """
-        return self._entity_configs.get(label, None)
+        if label in self._label_map:
+            return self._label_map[label]
+
+        elif label in self._factory_map:
+            return self._factory_map[label]
+
+        else:
+            raise KeyError(label)
 
     def add_entity(self, entity):
         """
         :type entity: flxinjection.domain.BaseEntity
         """
-        label = entity.label
+        self.__map_entity_label(entity)
+        self.__map_entity_factory(entity)
 
-        if label in self._entity_configs:
-            raise KeyError(label) # TODO: message
+    def __map_entity_label(self, entity):
+        """
+        :type entity: flxinjection.domain.BaseEntity
+        """
+        if entity.label:
+            if entity.label in self._label_map:
+                raise KeyError(entity.label) # TODO: message
+            self._label_map[entity.label] = entity
 
-        self._entity_configs[label] = entity
+    def __map_entity_factory(self, entity):
+        """
+        :type entity: flxinjection.domain.BaseEntity
+        """
+        if entity.factory in self._factory_map:
+            return
+        self._factory_map[entity.factory] = entity

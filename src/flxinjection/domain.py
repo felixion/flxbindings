@@ -1,14 +1,14 @@
 class BaseEntity(object):
     """
     """
-    def __init__(self):
+    def __init__(self, label = None, factory = None, singleton = True, dependencies = None, parameters = None):
         """
         """
-        self._label = None
-        self._factory = None
-        self._singleton = True
-        self._dependencies = list()
-        self._parameters = dict()
+        self._label = label
+        self._factory = factory
+        self._singleton = singleton
+        self._dependencies = dependencies or list()
+        self._parameters = parameters or dict()
 
     @property
     def label(self):
