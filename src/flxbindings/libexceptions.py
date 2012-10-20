@@ -2,6 +2,9 @@ class BindingsException(Exception):
     """
     """
 
+class BindingsConfigurationException(BindingsException):
+    """"""
+
 class BindingsImportError(BindingsException):
     """
     """

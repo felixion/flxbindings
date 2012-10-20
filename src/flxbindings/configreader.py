@@ -4,7 +4,6 @@ Module for reading bindings configurations from file
 from yaml.loader import Loader
 from flxbindings.domain import EntityReference, Component, ActionEntity, Properties
 from flxbindings.logutil import dynamiclogger
-from flxbindings.manager import BindingsManager
 
 class ConfigurationLoader(Loader):
     """
@@ -103,29 +102,30 @@ class ConfigurationLoader(Loader):
 
 if __name__ == "__main__":
 
-    manager = BindingsManager()
+#    manager = BindingsManager()
+#
+#    filepath = "/Users/aaron/IdeaProjects/flx-injection/tests/test_flxbindings/resources/test_configuration.yaml"
+#    data = ConfigurationLoader.load_from_filepath(filepath)
+#
+#    for d in data:
+#        print "d:", d
+#        if d._dependencies:
+#            print "\tdependencies:", d._dependencies
+#        if d._parameters:
+#            print "\tparameters:", d._parameters
+#
+#        print
+#
+#        manager.add_entity(d)
+#
+#    import sys
+#    sys.stdout.flush()
+#    try:
+#        print "props-1:", manager.resolve("properties-1")
+#        print "comp-1:", manager.resolve("component-1")
+#
+#    except:
+#        import traceback
+#        traceback.print_exc()
 
-    filepath = "/Users/aaron/IdeaProjects/flx-injection/tests/test_flxbindings/resources/test_configuration.yaml"
-    data = ConfigurationLoader.load_from_filepath(filepath)
-
-    for d in data:
-        print "d:", d
-        if d._dependencies:
-            print "\tdependencies:", d._dependencies
-        if d._parameters:
-            print "\tparameters:", d._parameters
-
-        print
-
-        manager.add_entity(d)
-
-    import sys
-    sys.stdout.flush()
-    try:
-        print "props-1:", manager.resolve("properties-1")
-        print "comp-1:", manager.resolve("component-1")
-
-    except:
-        import traceback
-        traceback.print_exc()
-
+    pass
