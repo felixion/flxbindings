@@ -27,7 +27,7 @@ class BaseEntity(object):
 
     def __repr__(self):
         """"""
-        return "#<BaseEntity :label %s :factory %s>" % (self.label, self.factory)
+        return "#<%s :label %s :factory %s>" % (self.__class__.__name__, self.label, self.factory)
 
 class Component(BaseEntity):
     """"""

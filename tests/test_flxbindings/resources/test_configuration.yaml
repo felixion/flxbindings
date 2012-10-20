@@ -1,0 +1,56 @@
+!flxbindings/configuration
+
+  - !flxbindings/property
+    label: properties-1
+    factory: test_flxbindings.fixture.configentities.PropertiesFactory1
+    parameters:
+      a: "a"
+      b: "b"
+
+  - !flxbindings/property
+      factory: test_flxbindings.fixture.configentities.PropertiesFactory2
+      singleton: false
+      parameters:
+        a: "a"
+        b: !flxbindings/reference:properties-1
+
+  - !flxbindings/component
+      label: component-1
+      factory: test_flxbindings.fixture.configentities.Component1
+      parameters:
+        a: "a"
+        b: "b"
+
+  - !flxbindings/component
+        factory: test_flxbindings.fixture.configentities.Component2
+        singleton: false
+        parameters:
+          a: "a"
+          b: !flxbindings/reference:properties-1
+          c: !flxbindings/reference:component-1
+
+  - !flxbindings/component
+        factory: test_flxbindings.fixture.configentities.Component2
+        parameters:
+          a: "a"
+          b: !flxbindings/reference:properties-1
+          c: !flxbindings/reference:component-1
+        dependencies:
+          - !flxbindings/reference:action-1
+          - !flxbindings/reference:action-2
+
+  - !flxbindings/action
+      label: action-1
+      factory: test_flxbindings.fixture.configentities.Action1
+      parameters:
+        a: "a"
+        b: "b"
+
+  - !flxbindings/action
+      label: action-2
+      factory: test_flxbindings.fixture.configentities.Action2
+      singleton: false
+      parameters:
+        a: "a"
+        b: !flxbindings/reference:properties-1
+        c: !flxbindings/reference:component-1
