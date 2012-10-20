@@ -19,16 +19,16 @@ class InstanceManager(object):
         :type builder: flxinjection.entbuilder.EntityBuilder
         """
         try:
+            # determine if singleton object already built...
+            if entity.singleton and self._has_instance(label, entity):
+                return self._resolve_instance(label, entity)
+
             # handle dependencies
             self._instantiate_dependencies(label, entity, builder)
 
             # if not singleton, build new object
             if not entity.singleton:
                 return self._create_entity(label, entity, builder)
-
-            # determine if singleton object already built...
-            if self._has_instance(label, entity):
-                return self._resolve_instance(label, entity)
 
             # build object and store singleton
             return self._build_singleton(label, entity, builder)
