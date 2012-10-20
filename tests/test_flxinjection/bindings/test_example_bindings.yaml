@@ -1,0 +1,13 @@
+!EntityBindings
+
+  - !Properties
+    label: logging-properties
+    factory: LoggingPropertiesFactory
+    parameters:
+      filepath: "logging.yaml"
+
+  - !Component
+    label: threadpool
+    factory: ThreadPoolFactory
+    parameters:
+      size: 10
