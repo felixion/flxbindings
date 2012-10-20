@@ -1,4 +1,4 @@
-from flxinjection.domain import Component
+from flxbindings.domain import Component
 
 # component 1
 #   label: foo

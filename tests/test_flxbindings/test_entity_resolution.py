@@ -3,8 +3,8 @@ Unit-tests for resolving entities
 """
 from nose.tools.nontrivial import raises
 
-from flxinjection.logutil import dynamiclogger
-from flxinjection.manager import BindingsManager
+from flxbindings.logutil import dynamiclogger
+from flxbindings.manager import BindingsManager
 
 from test_flxbindings.fixture import entity_resolution
 from test_flxbindings.fixture.generics import GenericFactory1

@@ -1,9 +1,9 @@
 import threading
-from flxinjection.entbuilder import EntityBuilder
-from flxinjection.entities import EntityConfigurationManager
-from flxinjection.instancemgr import InstanceManager
-from flxinjection.libexceptions import BindingsResolutionException
-from flxinjection.logutil import dynamiclogger
+from flxbindings.entbuilder import EntityBuilder
+from flxbindings.entities import EntityConfigurationManager
+from flxbindings.instancemgr import InstanceManager
+from flxbindings.libexceptions import BindingsResolutionException
+from flxbindings.logutil import dynamiclogger
 
 class BindingsManager(object):
     """
@@ -42,7 +42,7 @@ class BindingsManager(object):
 
     def add_entity(self, entity):
         """
-        :type entity: flxinjection.domain.BaseEntity
+        :type entity: flxbindings.domain.BaseEntity
         """
         self._logger.debug("add entity: %s" % entity)
         self._entities.add_entity(entity)

@@ -1,7 +1,7 @@
 import traceback
-from flxinjection.domain import EntityFactory, EntityReference, Action
-from flxinjection.libexceptions import BindingsInstantiationException, BindingsResolutionException, BindingsImportError
-from flxinjection.logutil import dynamiclogger
+from flxbindings.domain import EntityFactory, EntityReference, Action
+from flxbindings.libexceptions import BindingsInstantiationException, BindingsResolutionException, BindingsImportError
+from flxbindings.logutil import dynamiclogger
 
 class EntityBuilder(object):
     """
@@ -10,13 +10,13 @@ class EntityBuilder(object):
 
     def __init__(self, manager):
         """
-        :type manager: flxinjection.manager.BindingsManager
+        :type manager: flxbindings.manager.BindingsManager
         """
         self._manager = manager
 
     def build(self, label, entity):
         """
-        :type entity: flxinjection.domain.BaseEntity
+        :type entity: flxbindings.domain.BaseEntity
         """
         clazz = self._resolve_factory(entity)
         factory = self._init_factory(entity, clazz)
@@ -25,7 +25,7 @@ class EntityBuilder(object):
 
     def _resolve_factory(self, entity):
         """
-        :type entity: flxinjection.domain.BaseEntity
+        :type entity: flxbindings.domain.BaseEntity
         """
         try:
             clazzpath = entity.factory
@@ -45,7 +45,7 @@ class EntityBuilder(object):
 
     def _init_factory(self, entity, clazz):
         """
-        :type entity: flxinjection.domain.BaseEntity
+        :type entity: flxbindings.domain.BaseEntity
         """
         try:
             parameters = self._resolve_parameters(entity)
@@ -79,7 +79,7 @@ class EntityBuilder(object):
 
     def _call_factory(self, entity, factory):
         """
-        :type entity: flxinjection.domain.BaseEntity
+        :type entity: flxbindings.domain.BaseEntity
         """
         try:
             if isinstance(factory, EntityFactory):

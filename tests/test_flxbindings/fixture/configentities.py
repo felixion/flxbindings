@@ -1,4 +1,4 @@
-from flxinjection.domain import Action
+from flxbindings.domain import Action
 
 class PropertiesFactory1(object):
     """"""

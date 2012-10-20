@@ -2,10 +2,10 @@
 Unit-tests for various error cases related to entity resolution
 """
 from nose.tools.nontrivial import raises
-from flxinjection.domain import Component, EntityReference
-from flxinjection.libexceptions import BindingsDependencyException, BindingsInstantiationException, BindingsResolutionException, BindingsImportError
-from flxinjection.logutil import dynamiclogger
-from flxinjection.manager import BindingsManager
+from flxbindings.domain import Component, EntityReference
+from flxbindings.libexceptions import BindingsDependencyException, BindingsInstantiationException, BindingsResolutionException, BindingsImportError
+from flxbindings.logutil import dynamiclogger
+from flxbindings.manager import BindingsManager
 from test_flxbindings.fixture.generics import InitExceptionFactory, InitException, BuildException
 
 class TestEntityErrors(object):

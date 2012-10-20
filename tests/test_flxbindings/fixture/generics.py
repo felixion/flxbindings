@@ -1,4 +1,4 @@
-from flxinjection.domain import EntityFactory, Action
+from flxbindings.domain import EntityFactory, Action
 
 class BaseFactory(EntityFactory):
     NUM_INITS = 0

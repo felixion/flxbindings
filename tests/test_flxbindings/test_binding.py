@@ -1,9 +1,9 @@
 """
 Unit-tests for the attribute binding mechanism
 """
-from flxinjection.domain import Component
-from flxinjection.logutil import dynamiclogger
-from flxinjection.manager import BindingsManager
+from flxbindings.domain import Component
+from flxbindings.logutil import dynamiclogger
+from flxbindings.manager import BindingsManager
 from test_flxbindings.fixture.generics import GenericFactory1
 
 manager = BindingsManager()

@@ -1,4 +1,4 @@
-from flxinjection.libexceptions import BindingsResolutionException
+from flxbindings.libexceptions import BindingsResolutionException
 
 class EntityConfigurationManager(object):
     """
@@ -23,14 +23,14 @@ class EntityConfigurationManager(object):
 
     def add_entity(self, entity):
         """
-        :type entity: flxinjection.domain.BaseEntity
+        :type entity: flxbindings.domain.BaseEntity
         """
         self.__map_entity_label(entity)
         self.__map_entity_factory(entity)
 
     def __map_entity_label(self, entity):
         """
-        :type entity: flxinjection.domain.BaseEntity
+        :type entity: flxbindings.domain.BaseEntity
         """
         if entity.label:
             if entity.label in self._label_map:
@@ -39,7 +39,7 @@ class EntityConfigurationManager(object):
 
     def __map_entity_factory(self, entity):
         """
-        :type entity: flxinjection.domain.BaseEntity
+        :type entity: flxbindings.domain.BaseEntity
         """
         if entity.factory in self._factory_map:
             return

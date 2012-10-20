@@ -1,9 +1,9 @@
 """
 Unit-tests to ensure singletons are handled correctly
 """
-from flxinjection.domain import Component, EntityReference
-from flxinjection.logutil import dynamiclogger
-from flxinjection.manager import BindingsManager
+from flxbindings.domain import Component, EntityReference
+from flxbindings.logutil import dynamiclogger
+from flxbindings.manager import BindingsManager
 from test_flxbindings.fixture.generics import GenericFactory1, GenericFactory2
 
 class TestSingletonHandling(object):

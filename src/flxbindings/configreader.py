@@ -2,9 +2,9 @@
 Module for reading bindings configurations from file
 """
 from yaml.loader import Loader
-from flxinjection.domain import EntityReference, Component, ActionEntity, Properties
-from flxinjection.logutil import dynamiclogger
-from flxinjection.manager import BindingsManager
+from flxbindings.domain import EntityReference, Component, ActionEntity, Properties
+from flxbindings.logutil import dynamiclogger
+from flxbindings.manager import BindingsManager
 
 class ConfigurationLoader(Loader):
     """

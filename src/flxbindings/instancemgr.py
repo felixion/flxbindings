@@ -1,5 +1,5 @@
-from flxinjection.libexceptions import BindingsInstantiationException, BindingsException
-from flxinjection.logutil import dynamiclogger
+from flxbindings.libexceptions import BindingsInstantiationException, BindingsException
+from flxbindings.logutil import dynamiclogger
 
 class InstanceManager(object):
     """
@@ -8,15 +8,15 @@ class InstanceManager(object):
 
     def __init__(self, manager):
         """
-        :type manager: flxinjection.manager.BindingsManager
+        :type manager: flxbindings.manager.BindingsManager
         """
         self._manager = manager
         self._instances = dict()
     
     def instantiate(self, label, entity, builder):
         """
-        :type entity: flxinjection.domain.BaseEntity
-        :type builder: flxinjection.entbuilder.EntityBuilder
+        :type entity: flxbindings.domain.BaseEntity
+        :type builder: flxbindings.entbuilder.EntityBuilder
         """
         try:
             # determine if singleton object already built...
@@ -43,29 +43,29 @@ class InstanceManager(object):
 
     def _create_entity(self, label, entity, builder):
         """
-        :type entity: flxinjection.domain.BaseEntity
-        :type builder: flxinjection.entbuilder.EntityBuilder
+        :type entity: flxbindings.domain.BaseEntity
+        :type builder: flxbindings.entbuilder.EntityBuilder
         """
         return builder.build(label, entity)
 
     def _has_instance(self, label, entity):
         """
-        :type entity: flxinjection.domain.BaseEntity
-        :type builder: flxinjection.entbuilder.EntityBuilder
+        :type entity: flxbindings.domain.BaseEntity
+        :type builder: flxbindings.entbuilder.EntityBuilder
         """
         return label in self._instances
 
     def _resolve_instance(self, label, entity):
         """
-        :type entity: flxinjection.domain.BaseEntity
-        :type builder: flxinjection.entbuilder.EntityBuilder
+        :type entity: flxbindings.domain.BaseEntity
+        :type builder: flxbindings.entbuilder.EntityBuilder
         """
         return self._instances.get(label, None)
 
     def _build_singleton(self, label, entity, builder):
         """
-        :type entity: flxinjection.domain.BaseEntity
-        :type builder: flxinjection.entbuilder.EntityBuilder
+        :type entity: flxbindings.domain.BaseEntity
+        :type builder: flxbindings.entbuilder.EntityBuilder
         """
         obj = self._create_entity(label, entity, builder)
         self._instances[label] = obj
@@ -73,8 +73,8 @@ class InstanceManager(object):
 
     def _instantiate_dependencies(self, label, entity, builder):
         """
-        :type entity: flxinjection.domain.BaseEntity
-        :type builder: flxinjection.entbuilder.EntityBuilder
+        :type entity: flxbindings.domain.BaseEntity
+        :type builder: flxbindings.entbuilder.EntityBuilder
         """
         for dependency in entity._dependencies:
             self._logger.debug("instantiate dependency: %s" % dependency)
