@@ -1,7 +1,7 @@
 import logging
 import sys
 
-from flxinjection.domain import Component, Properties, EntityReference
+from flxinjection.domain import Component, Properties, EntityReference, ActionEntity
 from flxinjection.logutil import dynamiclogger
 from flxinjection.manager import BindingsManager
 
@@ -71,11 +71,18 @@ class TestExample(object):
     @classmethod
     def _create_config_objects(cls):
         """"""
+        setup_action = ActionEntity()
+        setup_action._label = "configure-logging"
+        setup_action._factory = "test_flxinjection.entities.action.ConfigureLogging"
+
+        manager.add_entity(setup_action)
+
         threadpool = Component()
         threadpool._label = "threadpool"
         threadpool._factory = "test_flxinjection.entities.threadpool.ThreadPoolFactory"
         threadpool._parameters["size"] = 10
         threadpool._parameters["logprops"] = EntityReference("logging-properties")
+        threadpool._dependencies.append(setup_action)
 
         props = Properties()
         props._label = "logging-properties"

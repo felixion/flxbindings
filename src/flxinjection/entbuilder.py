@@ -1,5 +1,5 @@
 import traceback
-from flxinjection.domain import EntityFactory, EntityReference
+from flxinjection.domain import EntityFactory, EntityReference, Action
 from flxinjection.logutil import dynamiclogger
 
 class EntityBuilder(object):
@@ -70,5 +70,8 @@ class EntityBuilder(object):
         """
         if isinstance(factory, EntityFactory):
             return factory.build()
+
+        if isinstance(factory, Action):
+            return factory.run()
 
         return factory

@@ -1,8 +1,15 @@
+from flxinjection.logutil import dynamiclogger
+
 class InstanceManager(object):
     """
     """
-    def __init__(self):
-        """"""
+    _logger = dynamiclogger()
+
+    def __init__(self, manager):
+        """
+        :type manager: flxinjection.manager.BindingsManager
+        """
+        self._manager = manager
         self._instances = dict()
     
     def instantiate(self, label, entity, builder):
@@ -10,6 +17,8 @@ class InstanceManager(object):
         :type entity: flxinjection.domain.BaseEntity
         :type builder: flxinjection.entbuilder.EntityBuilder
         """
+        # handle dependencies
+        self._instantiate_dependencies(label, entity, builder)
 
         # if not singleton, build new object
         if not entity.singleton:
@@ -51,3 +60,12 @@ class InstanceManager(object):
         obj = self._create_entity(label, entity, builder)
         self._instances[label] = obj
         return obj
+
+    def _instantiate_dependencies(self, label, entity, builder):
+        """
+        :type entity: flxinjection.domain.BaseEntity
+        :type builder: flxinjection.entbuilder.EntityBuilder
+        """
+        for dependency in entity._dependencies:
+            self._logger.debug("instantiate dependency: %s" % dependency)
+            self._manager.resolve(dependency.label)

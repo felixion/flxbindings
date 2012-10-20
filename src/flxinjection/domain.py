@@ -35,6 +35,9 @@ class Component(BaseEntity):
 class Properties(BaseEntity):
     """"""
 
+class ActionEntity(BaseEntity):
+    """"""
+
 class EntityReference(object):
     """"""
     def __init__(self, label):
@@ -46,3 +49,9 @@ class EntityFactory(object):
     def build(self):
         """"""
         raise NotImplementedError()
+
+class Action(object):
+    """"""
+    def run(self):
+        """"""
+        return NotImplemented
