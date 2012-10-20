@@ -13,7 +13,7 @@ class BindingsManager(object):
         """
         self._entities = EntityConfigurationManager()
         self._instances = InstanceManager()
-        self._builder = EntityBuilder()
+        self._builder = EntityBuilder(self)
 
     def resolve(self, label):
         """

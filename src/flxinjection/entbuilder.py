@@ -1,9 +1,18 @@
 import traceback
-from flxinjection.domain import EntityFactory
+from flxinjection.domain import EntityFactory, EntityReference
+from flxinjection.logutil import dynamiclogger
 
 class EntityBuilder(object):
     """
     """
+    _logger = dynamiclogger()
+
+    def __init__(self, manager):
+        """
+        :type manager: flxinjection.manager.BindingsManager
+        """
+        self._manager = manager
+
     def build(self, label, entity):
         """
         :type entity: flxinjection.domain.BaseEntity
@@ -37,9 +46,23 @@ class EntityBuilder(object):
         """
         :type entity: flxinjection.domain.BaseEntity
         """
-        parameters = entity._parameters
+        parameters = self._resolve_parameters(entity)
         obj = clazz(**parameters)
         return obj
+
+    def _resolve_parameters(self, entity):
+        """"""
+        def _resolve_parameter(param, value):
+            if isinstance(value, EntityReference):
+
+                reference_label = value._label
+                self._logger.debug("dynamically resolving parameter: %s" % reference_label)
+                newvalue = self._manager.resolve(reference_label)
+                return param, newvalue
+
+            return param, value
+
+        return dict([_resolve_parameter(param, value) for param, value in entity._parameters.iteritems()])
 
     def _call_factory(self, entity, factory):
         """

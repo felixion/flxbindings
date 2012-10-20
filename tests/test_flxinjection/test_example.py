@@ -1,7 +1,7 @@
 import logging
 import sys
 
-from flxinjection.domain import Component, Properties
+from flxinjection.domain import Component, Properties, EntityReference
 from flxinjection.logutil import dynamiclogger
 from flxinjection.manager import BindingsManager
 
@@ -75,6 +75,7 @@ class TestExample(object):
         threadpool._label = "threadpool"
         threadpool._factory = "test_flxinjection.entities.threadpool.ThreadPoolFactory"
         threadpool._parameters["size"] = 10
+        threadpool._parameters["logprops"] = EntityReference("logging-properties")
 
         props = Properties()
         props._label = "logging-properties"

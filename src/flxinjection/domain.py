@@ -35,6 +35,12 @@ class Component(BaseEntity):
 class Properties(BaseEntity):
     """"""
 
+class EntityReference(object):
+    """"""
+    def __init__(self, label):
+        """"""
+        self._label = label
+
 class EntityFactory(object):
     """"""
     def build(self):
