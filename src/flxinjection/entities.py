@@ -1,3 +1,5 @@
+from flxinjection.libexceptions import BindingsResolutionException
+
 class EntityConfigurationManager(object):
     """
     """
@@ -17,7 +19,7 @@ class EntityConfigurationManager(object):
             return self._factory_map[label]
 
         else:
-            raise KeyError(label)
+            raise BindingsResolutionException("no binding exists for label \"%s\"" % label)
 
     def add_entity(self, entity):
         """

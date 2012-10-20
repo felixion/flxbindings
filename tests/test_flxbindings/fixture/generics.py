@@ -23,14 +23,28 @@ class GenericFactory2(EntityFactory):
         """"""
         self._is_built = True
 
+class InitException(Exception):
+    """"""
+
 class InitExceptionFactory(EntityFactory):
     """"""
+    NUM_EXCEPTIONS = 0
+
     def __init__(self):
         """"""
-        raise Exception("InitExceptionFactory")
+        self.inc_exceptions()
+        raise InitException("InitExceptionFactory")
 
     def build(self):
         """"""
+
+    @classmethod
+    def inc_exceptions(cls):
+        """"""
+        cls.NUM_EXCEPTIONS += 1
+
+class BuildException(Exception):
+    """"""
 
 class BuildExceptionFactory(EntityFactory):
     """"""
@@ -40,5 +54,5 @@ class BuildExceptionFactory(EntityFactory):
 
     def build(self):
         """"""
-        raise Exception("BuildExceptionFactory")
+        raise BuildException("BuildExceptionFactory")
 

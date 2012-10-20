@@ -44,6 +44,11 @@ class EntityReference(object):
         """"""
         self._label = label
 
+    @property
+    def label(self):
+        """"""
+        return self._label
+
 class EntityFactory(object):
     """"""
     def build(self):

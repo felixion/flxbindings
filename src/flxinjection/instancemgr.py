@@ -1,3 +1,4 @@
+from flxinjection.libexceptions import BindingsInstantiationException, BindingsException
 from flxinjection.logutil import dynamiclogger
 
 class InstanceManager(object):
@@ -17,19 +18,28 @@ class InstanceManager(object):
         :type entity: flxinjection.domain.BaseEntity
         :type builder: flxinjection.entbuilder.EntityBuilder
         """
-        # handle dependencies
-        self._instantiate_dependencies(label, entity, builder)
+        try:
+            # handle dependencies
+            self._instantiate_dependencies(label, entity, builder)
 
-        # if not singleton, build new object
-        if not entity.singleton:
-            return self._create_entity(label, entity, builder)
-        
-        # determine if singleton object already built...
-        if self._has_instance(label, entity):
-            return self._resolve_instance(label, entity)
-        
-        # build object and store singleton
-        return self._build_singleton(label, entity, builder)
+            # if not singleton, build new object
+            if not entity.singleton:
+                return self._create_entity(label, entity, builder)
+
+            # determine if singleton object already built...
+            if self._has_instance(label, entity):
+                return self._resolve_instance(label, entity)
+
+            # build object and store singleton
+            return self._build_singleton(label, entity, builder)
+
+        except BindingsException, e:
+
+            raise e
+
+        except Exception, e:
+
+            raise BindingsInstantiationException("exception instantiating entity %s" % entity, e)
 
     def _create_entity(self, label, entity, builder):
         """

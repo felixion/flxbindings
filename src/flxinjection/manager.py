@@ -1,6 +1,7 @@
 from flxinjection.entbuilder import EntityBuilder
 from flxinjection.entities import EntityConfigurationManager
 from flxinjection.instancemgr import InstanceManager
+from flxinjection.libexceptions import BindingsResolutionException
 from flxinjection.logutil import dynamiclogger
 
 class BindingsManager(object):
@@ -15,6 +16,11 @@ class BindingsManager(object):
         self._instances = InstanceManager(self)
         self._builder = EntityBuilder(self)
 
+    def check(self, label):
+        """
+        Checks whether a label exists (without throwing an exception)
+        """
+
     def resolve(self, label):
         """
         """
@@ -23,7 +29,7 @@ class BindingsManager(object):
         entity_config = self._entities.resolve(label)
 
         if entity_config is None:
-            raise KeyError(label) # TODO: message
+            raise BindingsResolutionException("no binding exists for label \"%s\"" % label)
 
         return self._instances.instantiate(label, entity_config, self._builder)
 

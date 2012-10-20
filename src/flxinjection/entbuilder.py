@@ -1,5 +1,6 @@
 import traceback
 from flxinjection.domain import EntityFactory, EntityReference, Action
+from flxinjection.libexceptions import BindingsInstantiationException, BindingsResolutionException, BindingsImportError
 from flxinjection.logutil import dynamiclogger
 
 class EntityBuilder(object):
@@ -34,21 +35,32 @@ class EntityBuilder(object):
             clazz = getattr(module, clazzname, None)
 
             if not clazz:
-                raise ImportError(clazzname)
+                raise BindingsImportError("no such factory for \"%s\"" % clazzpath)
 
             return clazz
 
         except ImportError, e:
 
-            traceback.print_exc()
+            raise BindingsImportError("no such factory for \"%s\"" % entity.factory, e)
 
     def _init_factory(self, entity, clazz):
         """
         :type entity: flxinjection.domain.BaseEntity
         """
-        parameters = self._resolve_parameters(entity)
-        obj = clazz(**parameters)
-        return obj
+        try:
+            parameters = self._resolve_parameters(entity)
+            obj = clazz(**parameters)
+            return obj
+
+        except BindingsResolutionException, e:
+
+            raise
+
+        except Exception, e:
+
+            print "e:", e
+            print "*" * 80
+            raise BindingsInstantiationException("exception while instantiating \"%s\"" % entity, e)
 
     def _resolve_parameters(self, entity):
         """"""
@@ -58,6 +70,7 @@ class EntityBuilder(object):
                 reference_label = value._label
                 self._logger.debug("dynamically resolving parameter: %s" % reference_label)
                 newvalue = self._manager.resolve(reference_label)
+
                 return param, newvalue
 
             return param, value
@@ -68,10 +81,15 @@ class EntityBuilder(object):
         """
         :type entity: flxinjection.domain.BaseEntity
         """
-        if isinstance(factory, EntityFactory):
-            return factory.build()
+        try:
+            if isinstance(factory, EntityFactory):
+                return factory.build()
 
-        if isinstance(factory, Action):
-            return factory.run()
+            if isinstance(factory, Action):
+                return factory.run()
 
-        return factory
+            return factory
+
+        except Exception, e:
+
+            raise BindingsInstantiationException("exception while building \"%s\"" % entity, e)
