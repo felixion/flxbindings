@@ -1,3 +1,4 @@
+import threading
 from flxinjection.entbuilder import EntityBuilder
 from flxinjection.entities import EntityConfigurationManager
 from flxinjection.instancemgr import InstanceManager
@@ -55,6 +56,19 @@ class EntityBinding(object):
         self._manager = manager
         self._label = label
 
+        self.__lock = threading.Lock()
+        self._instance = None
+
     def __get__(self, instance, owner):
         """"""
-        return self._manager.resolve(self._label)
+        if self._instance is None:
+            try:
+                self.__lock.acquire()
+
+                if self._instance is None:
+                    self._instance = self._manager.resolve(self._label)
+
+            finally:
+                self.__lock.release()
+
+        return self._instance
