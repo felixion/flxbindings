@@ -1,4 +1,5 @@
 import traceback
+from flxinjection.domain import EntityFactory
 
 class EntityBuilder(object):
     """
@@ -40,9 +41,11 @@ class EntityBuilder(object):
         obj = clazz(**parameters)
         return obj
 
-    def _call_factory(self, entity, obj):
+    def _call_factory(self, entity, factory):
         """
         :type entity: flxinjection.domain.BaseEntity
         """
-        # TODO: if isinstance(obj, EntityFactory): ...
-        return obj
+        if isinstance(factory, EntityFactory):
+            return factory.build()
+
+        return factory

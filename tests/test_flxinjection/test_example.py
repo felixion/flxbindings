@@ -5,6 +5,17 @@ from flxinjection.domain import Component, Properties
 from flxinjection.logutil import dynamiclogger
 from flxinjection.manager import BindingsManager
 
+manager = BindingsManager()
+
+class ExampleClient(object):
+
+    component1 = manager.bind("logging-properties")
+
+    def run(self):
+        """"""
+        print "ExampleClient.run"
+        print self.component1
+
 class TestExample(object):
 
     _logger = dynamiclogger()
@@ -22,14 +33,16 @@ class TestExample(object):
 
         logger.addHandler(handler)
 
+        cls._create_config_objects()
+
     def setup(self):
         """"""
         print "setup"
-        self._create_config_objects()
+
 
     def __init__(self):
         """"""
-        self._manager = BindingsManager()
+#        self._manager = BindingsManager()
 
     def test_1(self):
         """"""
@@ -43,14 +56,20 @@ class TestExample(object):
 
     def _instantiate(self):
         """"""
-        return self._manager.resolve("threadpool")
+        return manager.resolve("threadpool")
 
     def test_2(self):
 
-        logging_properties = self._manager.resolve("logging-properties")
+        logging_properties = manager.resolve("logging-properties")
         print "props:", logging_properties
 
-    def _create_config_objects(self):
+    def test_3(self):
+
+        client = ExampleClient()
+        client.run()
+
+    @classmethod
+    def _create_config_objects(cls):
         """"""
         threadpool = Component()
         threadpool._label = "threadpool"
@@ -59,8 +78,8 @@ class TestExample(object):
 
         props = Properties()
         props._label = "logging-properties"
-        props._factory = "test_flxinjection.entities.logging.LoggingPropertiesFactory"
+        props._factory = "test_flxinjection.entities.logents.LoggingPropertiesFactory"
         props._parameters["filepath"] = "foo.yaml"
 
-        self._manager.add_entity(threadpool)
-        self._manager.add_entity(props)
+        manager.add_entity(threadpool)
+        manager.add_entity(props)

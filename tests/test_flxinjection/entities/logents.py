@@ -5,6 +5,7 @@ class LoggingProperties(object):
     """"""
     def __init__(self):
         """"""
+        print "LoggingProperties.__init__()"
         self._level = logging.INFO
         self._logfile = "debug.log"
 
